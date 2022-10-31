@@ -18,5 +18,5 @@ $ cd FrontEnd-MonsterProject-VueJs
 ```
 ![Abrindo o pro html](/.github/index.html.png)
 
-### E assim iria abrir o projeto 
+### E assim ira abrir o projeto 
 ![](/.github/projectExemple.gif)
