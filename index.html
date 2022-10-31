@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.10/dist/vue.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="./assets/favoicon.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Game</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="panel scores">
+        <div class="score">
+          <h1 :class="{danger: playerLife < 20}">Jogador</h1>
+          <div>
+            <img
+              src="./assets/user/user1.png"
+              class="portrait"
+              alt="jogador"
+              v-if="playerLife >= 80"
+            />
+            <img
+              src="./assets/user/user2.png"
+              class="portrait"
+              alt="jogador"
+              v-if="playerLife < 80 && playerLife >= 20 "
+            />
+            <img
+              src="./assets/user/user3.png"
+              class="portrait"
+              alt="jogador"
+              v-if="playerLife < 20 && playerLife > 0"
+            />
+            <img
+              src="./assets/death.png"
+              class="portrait"
+              alt="death"
+              v-if="playerLife <= 0"
+            />
+          </div>
+
+          <div>
+            <p class="life" :class="{danger: playerLife < 20}">
+              {{playerLife}}%
+            </p>
+          </div>
+          <div class="box__heart">
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="playerLife >= 100"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="playerLife >= 80"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="playerLife >= 60"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="playerLife >= 40"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="playerLife >= 1"
+            />
+          </div>
+        </div>
+        <div class="score">
+          <h1 :class="{danger: monsterLife < 20}">Boss</h1>
+
+          <div class="portrait">
+            <img
+              src="./assets/boss/duck1.png"
+              class="portrait"
+              alt="jogador"
+              v-if="monsterLife >= 80"
+            />
+            <img
+              src="./assets/boss/boss2.png"
+              class="portrait"
+              alt="jogador"
+              v-if="monsterLife < 80 && monsterLife >= 20"
+            />
+            <img
+              src="./assets/boss/boss3.png"
+              class="portrait"
+              alt="jogador"
+              v-if="monsterLife < 20 && monsterLife > 0"
+            />
+            <img
+              src="./assets/death.png"
+              class="portrait"
+              alt="death"
+              v-if="monsterLife <= 0"
+            />
+          </div>
+          <p class="life" :class="{danger: monsterLife < 20}">
+            {{monsterLife}}%
+          </p>
+
+          <div class="box__heart">
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="monsterLife >= 100"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="monsterLife >= 80"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="monsterLife >= 60"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="monsterLife >= 40"
+            />
+            <img
+              src="./assets/heart.png"
+              alt="heart"
+              class="heart"
+              v-if="monsterLife >= 1"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div v-if="hasResult" class="panel result">
+        <div v-if="monsterLife <= 0" class="win">
+          <h1>Parabéns voce ganhou</h1>
+          <img src="./assets/relax.png" alt="capivara" class="gameOver" />
+        </div>
+        <div v-if="playerLife <= 0" class="loser">
+          <h1>Voce perdeu</h1>
+          <img src="./assets/GameOver.gif" alt="Game over" class="gameOver" />
+        </div>
+      </div>
+      <div class="panel buttons">
+        <template v-if="running">
+          <button class="btn attack" @click="attack(false)">Ataque</button>
+          <button class="btn especial-attack" @click="attack(true)">
+            Ataque Especial
+          </button>
+          <button class="btn heal" @click="heatAndHurt">Curar</button>
+          <button class="btn give-up" @click="running = false">Desistir</button>
+        </template>
+        <button class="btn inicialize" @click="startGame" v-else>
+          Iniciar Jogo
+        </button>
+      </div>
+      <div class="panel logs" v-if="logs.length">
+        <ul>
+          <li v-for="log in logs" :class="log.cls" class="log">{{log.text}}</li>
+        </ul>
+      </div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
